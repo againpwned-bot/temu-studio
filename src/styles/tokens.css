@@ -1,0 +1,100 @@
+/* Registered properties can be transitioned, so theme changes fade instead of snapping. */
+@property --accent {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #7cc8ff;
+}
+@property --accent-2 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #b59bff;
+}
+@property --text {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #f7f9ff;
+}
+@property --sky-top {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #1f5fcf;
+}
+@property --sky-mid {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #4d92ec;
+}
+@property --sky-horizon {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #a9d4ff;
+}
+@property --hole {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+:root {
+  --accent: #7cc8ff;
+  --accent-2: #b59bff;
+  --text: #f7f9ff;
+  --text-dim: color-mix(in srgb, var(--text) 66%, transparent);
+  --text-faint: color-mix(in srgb, var(--text) 42%, transparent);
+  --on-accent: #0a0e1a;
+
+  --sky-top: #1f5fcf;
+  --sky-mid: #4d92ec;
+  --sky-horizon: #a9d4ff;
+
+  --glass-rgb: 13 22 38;
+  --glass-alpha: 0.3;
+  --glass-blur: 22px;
+  --radius: 28px;
+
+  --font-body: 'Outfit Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Unbounded Variable', var(--font-body);
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --ui-scale: 1;
+
+  /* Fallbacks; theme.js swaps in real sampled springs via linear() when supported. */
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --spring-dur: 650ms;
+  --spring-soft: cubic-bezier(0.22, 1.25, 0.36, 1);
+  --spring-soft-dur: 800ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --line: rgb(255 255 255 / 0.08);
+  --well: rgb(255 255 255 / 0.04);
+  --well-hi: rgb(255 255 255 / 0.07);
+
+  color-scheme: dark;
+  transition:
+    --accent 0.7s var(--ease-out),
+    --accent-2 0.7s var(--ease-out),
+    --text 0.7s var(--ease-out),
+    --sky-top 1.2s var(--ease-in-out),
+    --sky-mid 1.2s var(--ease-in-out),
+    --sky-horizon 1.2s var(--ease-in-out);
+}
+
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  transition-delay: 0s !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}

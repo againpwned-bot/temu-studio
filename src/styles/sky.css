@@ -1,0 +1,92 @@
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sky-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 48%, var(--sky-horizon) 84%, var(--sky-horizon) 100%);
+}
+
+.sky-gradient::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+}
+
+.sky-stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.4s var(--ease-out);
+}
+
+.sky-stars.is-on {
+  opacity: 1;
+  animation: twinkle 5s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from {
+    filter: brightness(0.7);
+  }
+  to {
+    filter: brightness(1.2);
+  }
+}
+
+.sky-sun {
+  position: absolute;
+  top: -34vmax;
+  right: -20vmax;
+  width: 80vmax;
+  height: 80vmax;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, #fff 75%, var(--sky-horizon)) 0%,
+    color-mix(in srgb, var(--sky-horizon) 50%, transparent) 16%,
+    color-mix(in srgb, var(--sky-horizon) 14%, transparent) 36%,
+    transparent 62%
+  );
+  opacity: 0;
+  mix-blend-mode: screen;
+  transition: opacity 1.4s var(--ease-out);
+}
+
+.has-sun .sky-sun {
+  opacity: 0.7;
+}
+
+.sky-clouds {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50%;
+  opacity: 0;
+  transition: opacity 1.8s var(--ease-out);
+}
+
+.sky-clouds.is-ready {
+  opacity: 1;
+}
+
+.sparkles {
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
