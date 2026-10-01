@@ -1,7 +1,8 @@
 import { Emitter } from '../utils/emitter.js';
 import { debounce, loadJSON, saveJSON } from '../utils/storage.js';
 
-const KEY = 'temu-studio:settings:v1';
+const KEY = 'temu-studio:settings:v2';
+const LEGACY_KEY = 'temu-studio:settings:v1';
 
 export const THEMES = {
   daydream: {
@@ -111,7 +112,7 @@ export const DEFAULT_SETTINGS = Object.freeze({
   radius: 28,
   cloudDensity: 0.55,
   cloudSpeed: 1,
-  refraction: true,
+  refraction: false,
   intro: true,
   tilt: true,
   sparkles: true,
@@ -121,7 +122,9 @@ export const DEFAULT_SETTINGS = Object.freeze({
 export class Settings extends Emitter {
   constructor() {
     super();
-    const stored = loadJSON(KEY, {});
+    // v1 defaulted to SVG refraction, which can exhaust GPU memory on some machines; v2 keeps
+    // everything else but makes refraction opt-in.
+    const stored = loadJSON(KEY, null) ?? { ...loadJSON(LEGACY_KEY, {}), refraction: false };
     this.values = { ...DEFAULT_SETTINGS };
     for (const key of Object.keys(DEFAULT_SETTINGS)) {
       if (stored && typeof stored[key] === typeof DEFAULT_SETTINGS[key]) this.values[key] = stored[key];

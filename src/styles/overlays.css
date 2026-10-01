@@ -1,7 +1,5 @@
 /* ---------- intro (click to enter) ---------- */
 .intro {
-  --cx: 50vw;
-  --cy: 50vh;
   position: fixed;
   inset: 0;
   z-index: 100;
@@ -10,16 +8,17 @@
   cursor: pointer;
   outline: none;
   background: radial-gradient(ellipse at 50% 42%, rgb(10 14 32 / 0.42), rgb(3 5 12 / 0.8));
-  -webkit-backdrop-filter: blur(28px) saturate(140%);
-  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+.intro {
+  transition: opacity 0.9s var(--ease-out) 0.15s;
 }
 
 .intro.is-leaving {
-  --hole: 170vmax;
+  opacity: 0;
   pointer-events: none;
-  -webkit-mask-image: radial-gradient(circle at var(--cx) var(--cy), transparent var(--hole), #000 calc(var(--hole) + 140px));
-  mask-image: radial-gradient(circle at var(--cx) var(--cy), transparent var(--hole), #000 calc(var(--hole) + 140px));
-  transition: --hole 1.25s cubic-bezier(0.7, 0, 0.25, 1);
 }
 
 .intro-inner {
@@ -31,14 +30,12 @@
   text-align: center;
   transition:
     transform 1.1s var(--ease-in-out),
-    opacity 0.7s var(--ease-out),
-    filter 0.7s var(--ease-out);
+    opacity 0.7s var(--ease-out);
 }
 
 .intro.is-leaving .intro-inner {
-  transform: scale(1.22);
+  transform: scale(1.15);
   opacity: 0;
-  filter: blur(14px);
 }
 
 .intro-mark {
@@ -500,19 +497,16 @@
   opacity: 0;
   translate: 0 28px;
   scale: 0.94;
-  filter: blur(8px);
   transition:
     opacity 0.3s var(--ease-out),
     translate 0.65s var(--spring-soft),
-    scale 0.65s var(--spring-soft),
-    filter 0.3s var(--ease-out);
+    scale 0.65s var(--spring-soft);
 }
 
 .modal.is-open .modal-card {
   opacity: 1;
   translate: 0 0;
   scale: 1;
-  filter: blur(0);
 }
 
 .modal-head {
@@ -696,26 +690,22 @@
   opacity: 0;
   translate: 0 18px;
   scale: 0.88;
-  filter: blur(6px);
   transition:
     opacity 0.3s var(--ease-out),
     translate 0.65s var(--spring),
-    scale 0.65s var(--spring),
-    filter 0.3s var(--ease-out);
+    scale 0.65s var(--spring);
 }
 
 .toast.is-in {
   opacity: 1;
   translate: 0 0;
   scale: 1;
-  filter: blur(0);
 }
 
 .toast.is-out {
   opacity: 0;
   translate: 0 -10px;
   scale: 0.96;
-  filter: blur(6px);
   transition-duration: 0.35s;
 }
 

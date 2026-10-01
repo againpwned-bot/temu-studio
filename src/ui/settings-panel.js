@@ -76,7 +76,7 @@ export class SettingsPanel {
         this._switch(
           'refraction',
           'Liquid refraction',
-          this.liquidSupported ? 'Edges bend the sky like real glass' : 'Needs a Chromium browser (Chrome, Edge, Brave)',
+          this.liquidSupported ? 'Experimental. Heavy on the GPU, turn off if things stutter' : 'Needs a Chromium browser (Chrome, Edge, Brave)',
           !this.liquidSupported,
         ),
       ]),

@@ -66,7 +66,6 @@
 .card-wrap {
   position: relative;
   width: min(1080px, 100%);
-  will-change: transform;
   border-radius: var(--radius);
   box-shadow:
     0 1px 2px rgb(0 0 0 / 0),
@@ -734,11 +733,9 @@ body.is-entered .card-wrap {
   opacity: 0;
   visibility: hidden;
   translate: 28px 0;
-  filter: blur(6px);
   transition:
     opacity 0.28s var(--ease-out),
     translate 0.6s var(--spring-soft),
-    filter 0.28s,
     visibility 0s 0.6s;
 }
 
@@ -750,11 +747,9 @@ body.is-entered .card-wrap {
   opacity: 1;
   visibility: visible;
   translate: 0 0;
-  filter: blur(0);
   transition:
     opacity 0.4s var(--ease-out) 0.06s,
     translate 0.75s var(--spring-soft),
-    filter 0.4s var(--ease-out) 0.06s,
     visibility 0s;
 }
 

@@ -4,7 +4,7 @@ const PHRASES = ['click anywhere to enter', 'turn it up', 'slowed + reverb ready
 
 /**
  * guns.lol style "click to enter" splash. The click doubles as the user gesture that
- * unlocks Web Audio. On enter, a soft hole opens from the click point and dissolves the veil.
+ * unlocks Web Audio. On enter, the veil fades away and the app springs in.
  */
 export function runIntro(root, { onEnter }) {
   return new Promise((resolve) => {
@@ -54,23 +54,21 @@ export function runIntro(root, { onEnter }) {
     root.focus({ preventScroll: true });
 
     const listeners = new AbortController();
-    const enter = (x, y) => {
+    const enter = () => {
       clearTimeout(timer);
       listeners.abort();
       onEnter();
-      root.style.setProperty('--cx', `${x}px`);
-      root.style.setProperty('--cy', `${y}px`);
       root.classList.add('is-leaving');
       setTimeout(() => root.remove(), 1400);
       resolve();
     };
-    root.addEventListener('click', (e) => enter(e.clientX, e.clientY), { signal: listeners.signal });
+    root.addEventListener('click', () => enter(), { signal: listeners.signal });
     root.addEventListener(
       'keydown',
       (e) => {
         if (e.key !== 'Enter' && e.key !== ' ') return;
         e.preventDefault();
-        enter(window.innerWidth / 2, window.innerHeight / 2);
+        enter();
       },
       { signal: listeners.signal },
     );

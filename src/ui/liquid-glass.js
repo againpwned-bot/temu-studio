@@ -159,7 +159,8 @@ export class LiquidGlass {
     ]) {
       for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, String(v));
     }
-    item.image.setAttribute('href', displacementMap(width, height, item.radius, item.bezel));
+    const q = 4;
+    item.image.setAttribute('href', displacementMap(Math.ceil(width / q), Math.ceil(height / q), item.radius / q, item.bezel / q));
     item.displace.setAttribute('scale', String(item.scale));
     item.blur.setAttribute('stdDeviation', String(Math.max(0.01, this.blur * 0.6)));
     this._apply(element);

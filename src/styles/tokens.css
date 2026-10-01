@@ -29,11 +29,6 @@
   inherits: true;
   initial-value: #a9d4ff;
 }
-@property --hole {
-  syntax: '<length>';
-  inherits: false;
-  initial-value: 0px;
-}
 
 :root {
   --accent: #7cc8ff;

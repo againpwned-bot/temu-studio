@@ -38,11 +38,21 @@ export class Sky {
     this.vh = 0;
     this.dpr = 1;
     this.off = null;
+    this.paused = !document.hasFocus();
 
     this._grain();
     this._buildAlpha();
     this._resize();
     window.addEventListener('resize', () => this._resize());
+    // Drifting clouds force every glass surface to re-blur each frame; give the GPU a break
+    // whenever the user is in another window.
+    window.addEventListener('blur', () => {
+      this.paused = true;
+    });
+    window.addEventListener('focus', () => {
+      this.paused = false;
+      this._start();
+    });
     window.addEventListener(
       'pointermove',
       (e) => {
@@ -145,6 +155,11 @@ export class Sky {
   }
 
   _frame(dt) {
+    if (this.paused && this.layers.every((l) => l.fade >= 1) && !this.dirtyColor) {
+      this.off();
+      this.off = null;
+      return;
+    }
     const k = 1 - Math.exp(-dt * 5);
     let colorMoving = false;
     for (const key of ['cloud', 'horizon']) {
@@ -203,7 +218,7 @@ export class Sky {
   _resize() {
     this.vw = window.innerWidth;
     this.vh = window.innerHeight;
-    this.dpr = Math.min(1.5, window.devicePixelRatio || 1);
+    this.dpr = 1;
     this.canvas.width = Math.round(this.vw * this.dpr);
     this.canvas.height = Math.round(this.vh * (1 - CANVAS_TOP) * this.dpr);
     this._drawStars();
